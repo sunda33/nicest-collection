@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#681d2c" />
+    <meta name="description" content="Nicest Collection — thoughtfully selected women's shoes, bags and dresses." />
+    <title>Nicest Collection — Made for Your Moment</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23681d2c%22/><text x=%2250%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2252%22 fill=%22%23f8efe4%22>N</text></svg>" />
+  </head>
+  <body>
+    <div class="announcement">Free delivery in Lagos on orders over ₦150,000 <span>•</span> New season now available</div>
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top" aria-label="Nicest Collection home">
+        <span>NICEST</span><small>COLLECTION</small>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#new">New in</a>
+        <a href="#shop" data-filter-link="shoes">Shoes</a>
+        <a href="#shop" data-filter-link="bags">Bags</a>
+        <a href="#shop" data-filter-link="dresses">Dresses</a>
+        <a href="#story">Our story</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button" id="search-toggle" aria-label="Search products">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+        </button>
+        <button class="bag-button" id="bag-button" aria-label="Shopping bag, 0 items">
+          Bag <span id="bag-count">0</span>
+        </button>
+        <button class="menu-button" id="menu-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </header>
+    <div class="search-panel" id="search-panel" hidden>
+      <label for="search-input">What are you looking for?</label>
+      <div><input id="search-input" type="search" placeholder="Search dresses, bags, shoes…" /><button id="search-close" aria-label="Close search">×</button></div>
+    </div>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+      <a href="#new">New in</a><a href="#shop" data-filter-link="shoes">Shoes</a><a href="#shop" data-filter-link="bags">Bags</a><a href="#shop" data-filter-link="dresses">Dresses</a><a href="#story">Our story</a>
+    </nav>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <img src="/images/hero.png" alt="Woman in a champagne dress carrying a brown handbag" />
+        <div class="hero-copy">
+          <p class="kicker">The Signature Edit · 2026</p>
+          <h1 id="hero-title">Made for<br /><em>your moment.</em></h1>
+          <p>Elegant pieces, thoughtfully selected for the woman who knows that style lives in every detail.</p>
+          <a class="button button-light" href="#shop">Shop the collection <span>↗</span></a>
+        </div>
+        <a class="hero-scroll" href="#new" aria-label="Scroll to new arrivals">Scroll <span>↓</span></a>
+      </section>
+
+      <section class="intro section" id="new">
+        <div>
+          <p class="kicker burgundy">Curated for you</p>
+          <h2>Find the piece that<br /><em>feels like you.</em></h2>
+        </div>
+        <p class="intro-copy">From the perfect pair to the dress you never want to take off, every Nicest piece is chosen to bring a little more beauty into your everyday.</p>
+      </section>
+
+      <section class="categories section" aria-label="Shop by category">
+        <article class="category-card category-shoes">
+          <img src="/images/shoes.png" alt="Burgundy slingback heels" />
+          <div><span>01</span><h3>Shoes</h3><a href="#shop" data-filter-link="shoes">Shop shoes ↗</a></div>
+        </article>
+        <article class="category-card category-bags">
+          <img src="/images/bag.png" alt="Brown structured leather handbag" />
+          <div><span>02</span><h3>Bags</h3><a href="#shop" data-filter-link="bags">Shop bags ↗</a></div>
+        </article>
+        <article class="category-card category-dresses">
+          <img src="/images/dress.png" alt="Model wearing a burgundy midi dress" />
+          <div><span>03</span><h3>Dresses</h3><a href="#shop" data-filter-link="dresses">Shop dresses ↗</a></div>
+        </article>
+      </section>
+
+      <section class="shop section" id="shop">
+        <div class="section-heading">
+          <div><p class="kicker burgundy">The newest pieces</p><h2>Just <em>in.</em></h2></div>
+          <div class="filters" role="group" aria-label="Filter products">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="shoes">Shoes</button>
+            <button class="filter" data-filter="bags">Bags</button>
+            <button class="filter" data-filter="dresses">Dresses</button>
+          </div>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <p class="no-results" id="no-results" hidden>No pieces matched your search. Try another word.</p>
+      </section>
+
+      <section class="story" id="story">
+        <div class="story-image"><img src="/images/dress.png" alt="Nicest Collection burgundy dress" /></div>
+        <div class="story-copy">
+          <p class="kicker">Our point of view</p>
+          <h2>More than an outfit.<br /><em>It’s how you arrive.</em></h2>
+          <p>Nicest Collection began with one simple belief: getting dressed should feel like a celebration. We bring together feminine silhouettes, beautiful finishes and pieces made to move with your life.</p>
+          <a href="#shop">Discover our selection <span>→</span></a>
+          <div class="story-notes"><span>Curated with care</span><span>Made for real moments</span><span>Delivered across Nigeria</span></div>
+        </div>
+      </section>
+
+      <section class="newsletter section">
+        <div><p class="kicker">The Nicest Note</p><h2>A little style,<br /><em>straight to your inbox.</em></h2></div>
+        <form id="newsletter-form">
+          <label for="email">Be first to know about new drops and private offers.</label>
+          <div><input id="email" type="email" placeholder="Your email address" required /><button type="submit" aria-label="Subscribe">→</button></div>
+          <p id="form-message" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-top">
+        <a class="wordmark footer-mark" href="#top"><span>NICEST</span><small>COLLECTION</small></a>
+        <p>Beautifully chosen.<br />Confidently worn.</p>
+        <div><a href="#shop">Shop all</a><a href="#story">Our story</a><a href="mailto:hello@nicestcollection.com">Contact</a></div>
+        <div><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">WhatsApp</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Nicest Collection</span><span>Lagos, Nigeria</span><a href="#">Privacy</a></div>
+    </footer>
+
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping bag" aria-hidden="true">
+      <div class="cart-head"><div><span>Your bag</span><small id="cart-summary">0 items</small></div><button id="cart-close" aria-label="Close bag">×</button></div>
+      <div class="cart-items" id="cart-items"><p class="empty-cart">Your bag is waiting for something nice.</p></div>
+      <div class="cart-foot" id="cart-foot" hidden><div><span>Subtotal</span><strong id="cart-total">₦0</strong></div><button>Checkout</button><small>Taxes and delivery calculated at checkout.</small></div>
+    </aside>
+    <div class="overlay" id="overlay" hidden></div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
