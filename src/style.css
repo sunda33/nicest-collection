@@ -104,6 +104,19 @@ h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 .product-info strong { color: var(--wine); font-size: 12px; font-weight: 500; white-space: nowrap; }
 .no-results { padding: 40px 0 80px; text-align: center; color: var(--muted); }
 
+@media (prefers-reduced-motion: no-preference) {
+  .product-card:nth-child(3n + 1) .product-image img { animation: product-drift 8s ease-in-out infinite alternate; }
+  .product-card:nth-child(3n + 2) .product-image img { animation: product-drift 9s ease-in-out -2.5s infinite alternate-reverse; }
+  .product-card:nth-child(3n) .product-image img { animation: product-drift 10s ease-in-out -5s infinite alternate; }
+  .product-card:hover .product-image img,
+  .product-card:focus-within .product-image img { animation-play-state: paused; transform: scale(1.045); }
+}
+
+@keyframes product-drift {
+  from { transform: scale(1.01) translate3d(0, 0, 0); }
+  to { transform: scale(1.055) translate3d(0, -1.2%, 0); }
+}
+
 .story { display: grid; grid-template-columns: 1fr 1fr; min-height: 780px; color: #f8eae1; background: var(--wine-dark); }
 .story-image { min-height: 650px; overflow: hidden; }
 .story-image img { height: 100%; object-fit: cover; object-position: center 20%; filter: saturate(.82); }

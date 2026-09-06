@@ -67,6 +67,25 @@ on conflict (id) do update set
   name = excluded.name, category = excluded.category, price = excluded.price,
   image = excluded.image, tag = excluded.tag, position = excluded.position, is_active = true;
 
+insert into public.products (id, name, category, price, image, tag, position)
+values
+  (10, 'Cognac Studded Mini Tote', 'bags', 25000, '/images/products/cognac-studded-mini-tote.jpg', 'New', 'center'),
+  (11, 'Amber Beaded Abaya', 'dresses', 37000, '/images/products/amber-beaded-abaya.jpg', 'New', 'center'),
+  (12, 'Midnight Beaded Abaya', 'dresses', 40000, '/images/products/midnight-beaded-abaya.jpg', 'New', 'center'),
+  (13, 'Azure Embellished Kaftan', 'dresses', 37000, '/images/products/azure-embellished-kaftan.jpg', 'New', 'center'),
+  (14, 'Terracotta Tie-Front Gown', 'dresses', 40000, '/images/products/terracotta-tie-front-gown.jpg', 'New', 'center'),
+  (15, 'Emerald Stripe Lounge Set', 'dresses', 37000, '/images/products/emerald-stripe-lounge-set.png', 'New', 'center'),
+  (16, 'Pearl Tie-Front Gown', 'dresses', 40000, '/images/products/pearl-tie-front-gown.jpg', 'New', 'center'),
+  (17, 'Everyday Tote Set', 'bags', 20000, '/images/products/everyday-tote-set.jpg', 'New', 'center'),
+  (18, 'Onyx Embroidered Abaya', 'dresses', 37000, '/images/products/onyx-embroidered-abaya.jpg', 'New', 'center'),
+  (19, 'Royal Blue Embroidered Abaya', 'dresses', 40000, '/images/products/royal-blue-embroidered-abaya.jpg', 'New', 'center'),
+  (20, 'Navy Bloom Lounge Set', 'dresses', 37000, '/images/products/navy-bloom-lounge-set.png', 'New', 'center'),
+  (21, 'Classic Shoulder Bag Set', 'bags', 38000, '/images/products/classic-shoulder-bag-set.jpg', 'New', 'center'),
+  (22, 'Burnt Orange Structured Bag', 'bags', 40000, '/images/products/burnt-orange-structured-bag.jpg', 'New', 'center')
+on conflict (id) do update set
+  name = excluded.name, category = excluded.category, price = excluded.price,
+  image = excluded.image, tag = excluded.tag, position = excluded.position, is_active = true;
+
 create or replace function public.place_order(
   p_customer_name text,
   p_phone text,

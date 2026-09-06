@@ -10,7 +10,20 @@ const fallbackProducts = [
   { id: 6, name: 'Imani Day Tote', category: 'bags', price: 105000, image: '/images/bag.png', tag: 'Limited', position: '42% center' },
   { id: 7, name: 'Zuri Satin Midi', category: 'dresses', price: 76000, image: '/images/dress.png', tag: 'New', position: 'center 15%' },
   { id: 8, name: 'Ada Occasion Dress', category: 'dresses', price: 89000, image: '/images/dress.png', tag: 'Bestseller', position: 'center 30%' },
-  { id: 9, name: 'Efe Wrap Dress', category: 'dresses', price: 72000, image: '/images/dress.png', tag: '', position: 'center 42%' }
+  { id: 9, name: 'Efe Wrap Dress', category: 'dresses', price: 72000, image: '/images/dress.png', tag: '', position: 'center 42%' },
+  { id: 10, name: 'Cognac Studded Mini Tote', category: 'bags', price: 25000, image: '/images/products/cognac-studded-mini-tote.jpg', tag: 'New', position: 'center' },
+  { id: 11, name: 'Amber Beaded Abaya', category: 'dresses', price: 37000, image: '/images/products/amber-beaded-abaya.jpg', tag: 'New', position: 'center' },
+  { id: 12, name: 'Midnight Beaded Abaya', category: 'dresses', price: 40000, image: '/images/products/midnight-beaded-abaya.jpg', tag: 'New', position: 'center' },
+  { id: 13, name: 'Azure Embellished Kaftan', category: 'dresses', price: 37000, image: '/images/products/azure-embellished-kaftan.jpg', tag: 'New', position: 'center' },
+  { id: 14, name: 'Terracotta Tie-Front Gown', category: 'dresses', price: 40000, image: '/images/products/terracotta-tie-front-gown.jpg', tag: 'New', position: 'center' },
+  { id: 15, name: 'Emerald Stripe Lounge Set', category: 'dresses', price: 37000, image: '/images/products/emerald-stripe-lounge-set.png', tag: 'New', position: 'center' },
+  { id: 16, name: 'Pearl Tie-Front Gown', category: 'dresses', price: 40000, image: '/images/products/pearl-tie-front-gown.jpg', tag: 'New', position: 'center' },
+  { id: 17, name: 'Everyday Tote Set', category: 'bags', price: 20000, image: '/images/products/everyday-tote-set.jpg', tag: 'New', position: 'center' },
+  { id: 18, name: 'Onyx Embroidered Abaya', category: 'dresses', price: 37000, image: '/images/products/onyx-embroidered-abaya.jpg', tag: 'New', position: 'center' },
+  { id: 19, name: 'Royal Blue Embroidered Abaya', category: 'dresses', price: 40000, image: '/images/products/royal-blue-embroidered-abaya.jpg', tag: 'New', position: 'center' },
+  { id: 20, name: 'Navy Bloom Lounge Set', category: 'dresses', price: 37000, image: '/images/products/navy-bloom-lounge-set.png', tag: 'New', position: 'center' },
+  { id: 21, name: 'Classic Shoulder Bag Set', category: 'bags', price: 38000, image: '/images/products/classic-shoulder-bag-set.jpg', tag: 'New', position: 'center' },
+  { id: 22, name: 'Burnt Orange Structured Bag', category: 'bags', price: 40000, image: '/images/products/burnt-orange-structured-bag.jpg', tag: 'New', position: 'center' }
 ];
 
 let products = fallbackProducts;
