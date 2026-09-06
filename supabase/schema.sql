@@ -1,11 +1,12 @@
 create table if not exists public.products (
   id bigint primary key,
   name text not null,
-  category text not null check (category in ('shoes', 'bags', 'dresses')),
+  category text not null check (category in ('shoes', 'bags', 'dresses', 'jewelry')),
   price bigint not null check (price >= 0),
   image text not null,
   tag text not null default '',
   position text not null default 'center',
+  sizes text not null default '',
   is_active boolean not null default true,
   created_at timestamptz not null default now()
 );
@@ -34,6 +35,11 @@ create table if not exists public.order_items (
 alter table public.products enable row level security;
 alter table public.orders enable row level security;
 alter table public.order_items enable row level security;
+
+alter table public.products add column if not exists sizes text not null default '';
+alter table public.products drop constraint if exists products_category_check;
+alter table public.products add constraint products_category_check
+  check (category in ('shoes', 'bags', 'dresses', 'jewelry'));
 
 create policy "Public can view active products" on public.products
 for select to anon, authenticated using (is_active = true);
@@ -66,6 +72,25 @@ values
 on conflict (id) do update set
   name = excluded.name, category = excluded.category, price = excluded.price,
   image = excluded.image, tag = excluded.tag, position = excluded.position, is_active = true;
+
+insert into public.products (id, name, category, price, image, tag, position, sizes)
+values
+  (23, 'Pastel Orchard Jewelry Set', 'jewelry', 25000, '/images/products/pastel-orchard-jewelry-set.jpg', 'New', 'center', ''),
+  (24, 'Rainbow Bloom Jewelry Set', 'jewelry', 25000, '/images/products/rainbow-bloom-jewelry-set.jpg', 'New', 'center', ''),
+  (25, 'Fuchsia Butterfly Jewelry Set', 'jewelry', 25000, '/images/products/fuchsia-butterfly-jewelry-set.jpg', 'New', 'center', ''),
+  (26, 'Crystal Cascade Jewelry Set', 'jewelry', 25000, '/images/products/crystal-cascade-jewelry-set.jpg', 'New', 'center', ''),
+  (27, 'Monochrome Ballet Sneaker', 'shoes', 22000, '/images/products/monochrome-ballet-sneaker.jpg', 'New', 'center', 'Black: 37, 38, 41'),
+  (28, 'Champagne Blossom Jewelry Set', 'jewelry', 25000, '/images/products/champagne-blossom-jewelry-set.jpg', 'New', 'center', ''),
+  (29, 'Pearl Vine Jewelry Set', 'jewelry', 25000, '/images/products/pearl-vine-jewelry-set.jpg', 'New', 'center', ''),
+  (30, 'Wine Heritage Slide', 'shoes', 25000, '/images/products/wine-heritage-slide.jpg', 'New', 'center', 'Wine: 37, 41'),
+  (31, 'Scarlet Stiletto Mule', 'shoes', 22000, '/images/products/scarlet-stiletto-mule.jpg', 'New', 'center', ''),
+  (32, 'Trio Patent Slingback', 'shoes', 25000, '/images/products/trio-patent-slingback.jpg', 'New', 'center', 'Black: 37, 38, 41 · Wine: 37, 41'),
+  (33, 'Onyx Rose Stiletto', 'shoes', 22000, '/images/products/onyx-rose-stiletto.jpg', 'New', 'center', 'Black: 37, 38, 41'),
+  (34, 'Color Pop Slingback', 'shoes', 25000, '/images/products/color-pop-slingback.jpg', 'New', 'center', 'Black: 37, 38, 41 · Wine: 37, 41 · Green: 42')
+on conflict (id) do update set
+  name = excluded.name, category = excluded.category, price = excluded.price,
+  image = excluded.image, tag = excluded.tag, position = excluded.position,
+  sizes = excluded.sizes, is_active = true;
 
 insert into public.products (id, name, category, price, image, tag, position)
 values

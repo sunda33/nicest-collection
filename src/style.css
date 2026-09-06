@@ -126,6 +126,7 @@ h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 .product-info { padding-top: 16px; display: flex; align-items: start; justify-content: space-between; gap: 15px; }
 .product-info h3 { margin: 0 0 6px; font-family: 'Italiana', Georgia, serif; font-size: 19px; font-weight: 400; }
 .product-info p { margin: 0; color: var(--muted); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+.product-sizes { display: block; max-width: 245px; margin-top: 8px; color: var(--muted); font-size: 9px; line-height: 1.5; }
 .product-info strong { color: var(--wine); font-size: 12px; font-weight: 500; white-space: nowrap; }
 .no-results { padding: 40px 0 80px; text-align: center; color: var(--muted); }
 

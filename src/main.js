@@ -23,7 +23,19 @@ const fallbackProducts = [
   { id: 19, name: 'Royal Blue Embroidered Abaya', category: 'dresses', price: 40000, image: '/images/products/royal-blue-embroidered-abaya.jpg', tag: 'New', position: 'center' },
   { id: 20, name: 'Navy Bloom Lounge Set', category: 'dresses', price: 37000, image: '/images/products/navy-bloom-lounge-set.png', tag: 'New', position: 'center' },
   { id: 21, name: 'Classic Shoulder Bag Set', category: 'bags', price: 38000, image: '/images/products/classic-shoulder-bag-set.jpg', tag: 'New', position: 'center' },
-  { id: 22, name: 'Burnt Orange Structured Bag', category: 'bags', price: 40000, image: '/images/products/burnt-orange-structured-bag.jpg', tag: 'New', position: 'center' }
+  { id: 22, name: 'Burnt Orange Structured Bag', category: 'bags', price: 40000, image: '/images/products/burnt-orange-structured-bag.jpg', tag: 'New', position: 'center' },
+  { id: 23, name: 'Pastel Orchard Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/pastel-orchard-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 24, name: 'Rainbow Bloom Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/rainbow-bloom-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 25, name: 'Fuchsia Butterfly Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/fuchsia-butterfly-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 26, name: 'Crystal Cascade Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/crystal-cascade-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 27, name: 'Monochrome Ballet Sneaker', category: 'shoes', price: 22000, image: '/images/products/monochrome-ballet-sneaker.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41' },
+  { id: 28, name: 'Champagne Blossom Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/champagne-blossom-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 29, name: 'Pearl Vine Jewelry Set', category: 'jewelry', price: 25000, image: '/images/products/pearl-vine-jewelry-set.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 30, name: 'Wine Heritage Slide', category: 'shoes', price: 25000, image: '/images/products/wine-heritage-slide.jpg', tag: 'New', position: 'center', sizes: 'Wine: 37, 41' },
+  { id: 31, name: 'Scarlet Stiletto Mule', category: 'shoes', price: 22000, image: '/images/products/scarlet-stiletto-mule.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 32, name: 'Trio Patent Slingback', category: 'shoes', price: 25000, image: '/images/products/trio-patent-slingback.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41 · Wine: 37, 41' },
+  { id: 33, name: 'Onyx Rose Stiletto', category: 'shoes', price: 22000, image: '/images/products/onyx-rose-stiletto.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41' },
+  { id: 34, name: 'Color Pop Slingback', category: 'shoes', price: 25000, image: '/images/products/color-pop-slingback.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41 · Wine: 37, 41 · Green: 42' }
 ];
 
 let products = fallbackProducts;
@@ -33,7 +45,7 @@ const noResults = document.querySelector('#no-results');
 const authModal = document.querySelector('#auth-modal');
 const checkoutModal = document.querySelector('#checkout-modal');
 const money = value => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(value);
-const categoryLabel = category => ({ shoes: 'shoe', bags: 'bag', dresses: 'dress' })[category] || category;
+const categoryLabel = category => ({ shoes: 'shoe', bags: 'bag', dresses: 'clothing', jewelry: 'jewelry' })[category] || category;
 
 function productCard(product) {
   return `<article class="product-card" data-category="${product.category}">
@@ -43,7 +55,7 @@ function productCard(product) {
       <img src="${product.image}" alt="${product.name}" style="object-position:${product.position}" />
       <button class="quick-add" data-add="${product.id}">Add to bag <span>+</span></button>
     </div>
-    <div class="product-info"><div><h3>${product.name}</h3><p>${categoryLabel(product.category)}</p></div><strong>${money(product.price)}</strong></div>
+    <div class="product-info"><div><h3>${product.name}</h3><p>${categoryLabel(product.category)}</p>${product.sizes ? `<small class="product-sizes">Sizes · ${product.sizes}</small>` : ''}</div><strong>${money(product.price)}</strong></div>
   </article>`;
 }
 
@@ -55,9 +67,7 @@ function renderProducts() {
   );
   grid.innerHTML = filtered.map(productCard).join('');
   noResults.hidden = filtered.length > 0;
-  noResults.textContent = state.filter === 'jewelry'
-    ? 'Our jewelry collection is coming soon. Follow Nicest Collection for the first release.'
-    : 'No pieces matched your search. Try another word.';
+  noResults.textContent = 'No pieces matched your search. Try another word.';
 }
 
 function setFilter(filter) {
@@ -269,7 +279,7 @@ async function initializeStore() {
 
   const [{ data: authData }, { data: productData, error: productError }] = await Promise.all([
     supabase.auth.getSession(),
-    supabase.from('products').select('id,name,category,price,image,tag,position').eq('is_active', true).order('id')
+    supabase.from('products').select('id,name,category,price,image,tag,position,sizes').eq('is_active', true).order('id')
   ]);
   state.session = authData.session;
   if (!productError && productData?.length) products = productData;
