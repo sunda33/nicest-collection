@@ -55,6 +55,9 @@ function renderProducts() {
   );
   grid.innerHTML = filtered.map(productCard).join('');
   noResults.hidden = filtered.length > 0;
+  noResults.textContent = state.filter === 'jewelry'
+    ? 'Our jewelry collection is coming soon. Follow Nicest Collection for the first release.'
+    : 'No pieces matched your search. Try another word.';
 }
 
 function setFilter(filter) {
