@@ -70,6 +70,29 @@ h1 em, h2 em { font-weight: 400; }
 h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 .intro-copy { max-width: 470px; margin: 0 0 8px; color: var(--muted); font-family: Georgia, serif; font-size: 17px; line-height: 1.8; }
 
+.runway-showcase { padding: clamp(70px, 8vw, 120px) 0 55px; overflow: hidden; color: #f8eae1; background: var(--wine-dark); }
+.runway-heading { margin-bottom: 45px; display: flex; align-items: end; justify-content: space-between; gap: 30px; }
+.runway-heading h2 { font-size: clamp(48px, 5.8vw, 86px); }
+.runway-heading > a { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid rgba(248,234,225,.5); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.runway-heading > a span { margin-left: 24px; }
+.runway-window { width: 100%; overflow: hidden; }
+.runway-track { width: max-content; display: flex; animation: runway-scroll 32s linear infinite; will-change: transform; }
+.runway-set { display: flex; align-items: center; gap: 18px; padding-right: 18px; }
+.runway-card { position: relative; width: clamp(250px, 25vw, 390px); height: clamp(390px, 42vw, 620px); flex: 0 0 auto; overflow: hidden; color: white; background: #4f2931; }
+.runway-card-short { height: clamp(310px, 32vw, 475px); }
+.runway-card::after { content: ''; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(24,8,12,.82)); }
+.runway-card img { height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .8s ease; }
+.runway-card:hover img { transform: scale(1.08); filter: saturate(1.08); }
+.runway-card > span { position: absolute; z-index: 2; inset: auto 20px 18px; display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+.runway-card strong { max-width: 70%; font-family: 'Italiana', Georgia, serif; font-size: clamp(18px, 1.7vw, 26px); font-weight: 400; line-height: 1.05; }
+.runway-card small { white-space: nowrap; font-size: 10px; }
+.runway-track:hover { animation-play-state: paused; }
+.runway-note { margin: 30px 24px 0; color: #bfa8a7; font-size: 8px; letter-spacing: .15em; text-align: center; text-transform: uppercase; }
+
+@keyframes runway-scroll {
+  to { transform: translateX(-50%); }
+}
+
 .categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding-bottom: clamp(100px, 12vw, 180px); }
 .category-card { position: relative; min-height: 560px; overflow: hidden; color: white; background: #c8b7a8; }
 .category-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(35,17,18,.64), transparent 55%); }
@@ -187,6 +210,7 @@ footer { padding: 75px clamp(24px, 6vw, 96px) 28px; color: #e9dcd4; background: 
   .hero-copy { width: 66vw; }
   .intro { grid-template-columns: 1fr; }
   .intro-copy { margin-left: auto; }
+  .runway-heading { align-items: start; flex-direction: column; }
   .categories { gap: 10px; }
   .category-card { min-height: 480px; }
   .category-card h3 { font-size: 39px; }
@@ -215,6 +239,10 @@ footer { padding: 75px clamp(24px, 6vw, 96px) 28px; color: #e9dcd4; background: 
   .intro { padding-block: 75px 55px; gap: 35px; }
   h2 { font-size: 48px; }
   .intro-copy { font-size: 15px; }
+  .runway-showcase { padding-top: 65px; }
+  .runway-heading { margin-bottom: 32px; }
+  .runway-card { width: 72vw; height: 105vw; }
+  .runway-card-short { width: 62vw; height: 78vw; }
   .categories { grid-template-columns: 1fr; padding-bottom: 95px; }
   .category-card { min-height: 490px; }
   .section-heading { align-items: start; flex-direction: column; }
@@ -236,4 +264,6 @@ footer { padding: 75px clamp(24px, 6vw, 96px) 28px; color: #e9dcd4; background: 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
   .product-image img { animation: none !important; }
+  .runway-track { width: auto; overflow-x: auto; animation: none; }
+  .runway-set[aria-hidden="true"] { display: none; }
 }
