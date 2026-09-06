@@ -20,6 +20,7 @@ const noResults = document.querySelector('#no-results');
 const authModal = document.querySelector('#auth-modal');
 const checkoutModal = document.querySelector('#checkout-modal');
 const money = value => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(value);
+const categoryLabel = category => ({ shoes: 'shoe', bags: 'bag', dresses: 'dress' })[category] || category;
 
 function productCard(product) {
   return `<article class="product-card" data-category="${product.category}">
@@ -29,7 +30,7 @@ function productCard(product) {
       <img src="${product.image}" alt="${product.name}" style="object-position:${product.position}" />
       <button class="quick-add" data-add="${product.id}">Add to bag <span>+</span></button>
     </div>
-    <div class="product-info"><div><h3>${product.name}</h3><p>${product.category.slice(0, -1)}</p></div><strong>${money(product.price)}</strong></div>
+    <div class="product-info"><div><h3>${product.name}</h3><p>${categoryLabel(product.category)}</p></div><strong>${money(product.price)}</strong></div>
   </article>`;
 }
 
@@ -82,7 +83,7 @@ function updateCart() {
     foot.hidden = true;
     return;
   }
-  items.innerHTML = state.cart.map((product, index) => `<article class="cart-item"><img src="${product.image}" alt="" /><div><p>${product.name}</p><small>${product.category.slice(0, -1)}</small><strong>${money(product.price)}</strong></div><button data-remove="${index}" aria-label="Remove ${product.name}">×</button></article>`).join('');
+  items.innerHTML = state.cart.map((product, index) => `<article class="cart-item"><img src="${product.image}" alt="" /><div><p>${product.name}</p><small>${categoryLabel(product.category)}</small><strong>${money(product.price)}</strong></div><button data-remove="${index}" aria-label="Remove ${product.name}">×</button></article>`).join('');
   document.querySelector('#cart-total').textContent = money(state.cart.reduce((sum, product) => sum + product.price, 0));
   foot.hidden = false;
 }
