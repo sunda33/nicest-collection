@@ -1,6 +1,8 @@
 node_modules/
 node_modules-copy/
+.pnpm-store/
 dist/
 .vite-cache/
 .env
 .env.*
+!.env.example
