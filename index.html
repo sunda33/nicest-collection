@@ -25,6 +25,7 @@
         <button class="icon-button" id="search-toggle" aria-label="Search products">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
         </button>
+        <button class="account-button" id="account-button" type="button">Sign in</button>
         <button class="bag-button" id="bag-button" aria-label="Shopping bag, 0 items">
           Bag <span id="bag-count">0</span>
         </button>
@@ -122,9 +123,38 @@
     <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping bag" aria-hidden="true">
       <div class="cart-head"><div><span>Your bag</span><small id="cart-summary">0 items</small></div><button id="cart-close" aria-label="Close bag">×</button></div>
       <div class="cart-items" id="cart-items"><p class="empty-cart">Your bag is waiting for something nice.</p></div>
-      <div class="cart-foot" id="cart-foot" hidden><div><span>Subtotal</span><strong id="cart-total">₦0</strong></div><button>Checkout</button><small>Taxes and delivery calculated at checkout.</small></div>
+      <div class="cart-foot" id="cart-foot" hidden><div><span>Subtotal</span><strong id="cart-total">₦0</strong></div><button id="checkout-button" type="button">Checkout</button><small>Sign in to securely place your order.</small></div>
     </aside>
     <div class="overlay" id="overlay" hidden></div>
+
+    <dialog class="modal" id="auth-modal" aria-labelledby="auth-title">
+      <button class="modal-close" type="button" data-close-dialog="auth-modal" aria-label="Close account window">×</button>
+      <p class="kicker burgundy">Your account</p>
+      <h2 id="auth-title">Welcome to<br /><em>Nicest.</em></h2>
+      <p class="modal-intro">Sign in to place orders and keep your purchases connected to your account.</p>
+      <form id="auth-form">
+        <label>Email address<input id="auth-email" type="email" autocomplete="email" required /></label>
+        <label>Password<input id="auth-password" type="password" autocomplete="current-password" minlength="6" required /></label>
+        <div class="modal-actions"><button class="primary-action" type="submit">Sign in</button><button class="secondary-action" id="signup-button" type="button">Create account</button></div>
+        <p class="form-status" id="auth-message" aria-live="polite"></p>
+      </form>
+      <div id="signed-in-panel" hidden><p id="signed-in-email"></p><button class="secondary-action" id="signout-button" type="button">Sign out</button></div>
+    </dialog>
+
+    <dialog class="modal" id="checkout-modal" aria-labelledby="checkout-title">
+      <button class="modal-close" type="button" data-close-dialog="checkout-modal" aria-label="Close checkout">×</button>
+      <p class="kicker burgundy">Secure checkout</p>
+      <h2 id="checkout-title">Delivery<br /><em>details.</em></h2>
+      <p class="modal-intro">Your order will be saved securely to your account.</p>
+      <form id="checkout-form">
+        <label>Full name<input id="customer-name" type="text" autocomplete="name" required /></label>
+        <label>Phone number<input id="customer-phone" type="tel" autocomplete="tel" required /></label>
+        <label>Delivery address<textarea id="delivery-address" autocomplete="street-address" rows="3" required></textarea></label>
+        <button class="primary-action" id="place-order-button" type="submit">Place order</button>
+        <p class="form-status" id="order-message" aria-live="polite"></p>
+      </form>
+    </dialog>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
