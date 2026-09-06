@@ -1,6 +1,7 @@
 import './style.css';
+import { isSupabaseConfigured, supabase } from './supabase.js';
 
-const products = [
+const fallbackProducts = [
   { id: 1, name: 'Ari Slingback', category: 'shoes', price: 58000, image: '/images/shoes.png', tag: 'New', position: 'center' },
   { id: 2, name: 'Mila Court Heel', category: 'shoes', price: 62000, image: '/images/shoes.png', tag: 'Bestseller', position: '60% center' },
   { id: 3, name: 'Sade Evening Heel', category: 'shoes', price: 54000, image: '/images/shoes.png', tag: '', position: '38% center' },
@@ -12,9 +13,12 @@ const products = [
   { id: 9, name: 'Efe Wrap Dress', category: 'dresses', price: 72000, image: '/images/dress.png', tag: '', position: 'center 42%' }
 ];
 
-const state = { filter: 'all', search: '', cart: [], favorites: new Set() };
+let products = fallbackProducts;
+const state = { filter: 'all', search: '', cart: [], favorites: new Set(), session: null };
 const grid = document.querySelector('#product-grid');
 const noResults = document.querySelector('#no-results');
+const authModal = document.querySelector('#auth-modal');
+const checkoutModal = document.querySelector('#checkout-modal');
 const money = value => new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(value);
 
 function productCard(product) {
@@ -31,7 +35,10 @@ function productCard(product) {
 
 function renderProducts() {
   const query = state.search.toLowerCase().trim();
-  const filtered = products.filter(p => (state.filter === 'all' || p.category === state.filter) && (!query || `${p.name} ${p.category}`.toLowerCase().includes(query)));
+  const filtered = products.filter(product =>
+    (state.filter === 'all' || product.category === state.filter)
+    && (!query || `${product.name} ${product.category}`.toLowerCase().includes(query))
+  );
   grid.innerHTML = filtered.map(productCard).join('');
   noResults.hidden = filtered.length > 0;
 }
@@ -49,7 +56,8 @@ grid.addEventListener('click', event => {
   const add = event.target.closest('[data-add]');
   const favorite = event.target.closest('[data-favorite]');
   if (add) {
-    const product = products.find(p => p.id === Number(add.dataset.add));
+    const product = products.find(item => item.id === Number(add.dataset.add));
+    if (!product) return;
     state.cart.push(product);
     updateCart();
     showToast(`${product.name} added to your bag`);
@@ -74,14 +82,17 @@ function updateCart() {
     foot.hidden = true;
     return;
   }
-  items.innerHTML = state.cart.map((p, index) => `<article class="cart-item"><img src="${p.image}" alt="" /><div><p>${p.name}</p><small>${p.category.slice(0, -1)}</small><strong>${money(p.price)}</strong></div><button data-remove="${index}" aria-label="Remove ${p.name}">×</button></article>`).join('');
-  document.querySelector('#cart-total').textContent = money(state.cart.reduce((sum, p) => sum + p.price, 0));
+  items.innerHTML = state.cart.map((product, index) => `<article class="cart-item"><img src="${product.image}" alt="" /><div><p>${product.name}</p><small>${product.category.slice(0, -1)}</small><strong>${money(product.price)}</strong></div><button data-remove="${index}" aria-label="Remove ${product.name}">×</button></article>`).join('');
+  document.querySelector('#cart-total').textContent = money(state.cart.reduce((sum, product) => sum + product.price, 0));
   foot.hidden = false;
 }
 
 document.querySelector('#cart-items').addEventListener('click', event => {
   const remove = event.target.closest('[data-remove]');
-  if (remove) { state.cart.splice(Number(remove.dataset.remove), 1); updateCart(); }
+  if (remove) {
+    state.cart.splice(Number(remove.dataset.remove), 1);
+    updateCart();
+  }
 });
 
 const cart = document.querySelector('#cart-drawer');
@@ -97,7 +108,11 @@ const searchInput = document.querySelector('#search-input');
 function closeSearch() { searchPanel.hidden = true; state.search = ''; searchInput.value = ''; renderProducts(); }
 document.querySelector('#search-toggle').addEventListener('click', () => { searchPanel.hidden = false; searchInput.focus(); });
 document.querySelector('#search-close').addEventListener('click', closeSearch);
-searchInput.addEventListener('input', event => { state.search = event.target.value; renderProducts(); document.querySelector('#shop').scrollIntoView({ behavior: 'smooth' }); });
+searchInput.addEventListener('input', event => {
+  state.search = event.target.value;
+  renderProducts();
+  document.querySelector('#shop').scrollIntoView({ behavior: 'smooth' });
+});
 
 const menuButton = document.querySelector('#menu-toggle');
 const mobileNav = document.querySelector('#mobile-nav');
@@ -107,7 +122,11 @@ menuButton.addEventListener('click', () => {
   mobileNav.hidden = open;
   document.body.classList.toggle('menu-open', !open);
 });
-mobileNav.addEventListener('click', () => { mobileNav.hidden = true; menuButton.setAttribute('aria-expanded', 'false'); document.body.classList.remove('menu-open'); });
+mobileNav.addEventListener('click', () => {
+  mobileNav.hidden = true;
+  menuButton.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+});
 
 document.querySelector('#newsletter-form').addEventListener('submit', event => {
   event.preventDefault();
@@ -117,7 +136,140 @@ document.querySelector('#newsletter-form').addEventListener('submit', event => {
 
 const toast = document.querySelector('#toast');
 let toastTimer;
-function showToast(message) { toast.textContent = message; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2600); }
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
 
-document.addEventListener('keydown', event => { if (event.key === 'Escape') { closeCart(); closeSearch(); } });
-renderProducts();
+function updateAuthUI() {
+  const accountButton = document.querySelector('#account-button');
+  const authForm = document.querySelector('#auth-form');
+  const signedInPanel = document.querySelector('#signed-in-panel');
+  const email = state.session?.user?.email;
+  accountButton.textContent = email ? 'Account' : 'Sign in';
+  authForm.hidden = Boolean(email);
+  signedInPanel.hidden = !email;
+  document.querySelector('#signed-in-email').textContent = email ? `Signed in as ${email}` : '';
+}
+
+document.querySelector('#account-button').addEventListener('click', () => {
+  updateAuthUI();
+  authModal.showModal();
+});
+
+document.querySelectorAll('[data-close-dialog]').forEach(button => button.addEventListener('click', () => {
+  document.querySelector(`#${button.dataset.closeDialog}`).close();
+}));
+
+document.querySelector('#auth-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!supabase) return showToast('Account service is not configured.');
+  const message = document.querySelector('#auth-message');
+  message.textContent = 'Signing you in…';
+  const { error } = await supabase.auth.signInWithPassword({
+    email: document.querySelector('#auth-email').value,
+    password: document.querySelector('#auth-password').value
+  });
+  message.textContent = error ? error.message : 'Signed in successfully.';
+  if (!error) setTimeout(() => authModal.close(), 500);
+});
+
+document.querySelector('#signup-button').addEventListener('click', async () => {
+  if (!supabase) return showToast('Account service is not configured.');
+  const email = document.querySelector('#auth-email').value;
+  const password = document.querySelector('#auth-password').value;
+  const message = document.querySelector('#auth-message');
+  if (!email || password.length < 6) {
+    message.textContent = 'Enter a valid email and a password of at least 6 characters.';
+    return;
+  }
+  message.textContent = 'Creating your account…';
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  message.textContent = error
+    ? error.message
+    : data.session
+      ? 'Your account is ready.'
+      : 'Check your email to confirm your account, then sign in.';
+});
+
+document.querySelector('#signout-button').addEventListener('click', async () => {
+  if (supabase) await supabase.auth.signOut();
+  authModal.close();
+  showToast('You are signed out.');
+});
+
+document.querySelector('#checkout-button').addEventListener('click', () => {
+  if (!isSupabaseConfigured) return showToast('Checkout is not configured yet.');
+  if (!state.session) {
+    closeCart();
+    authModal.showModal();
+    showToast('Sign in before placing your order.');
+    return;
+  }
+  closeCart();
+  checkoutModal.showModal();
+});
+
+document.querySelector('#checkout-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!supabase || !state.session || !state.cart.length) return;
+  const button = document.querySelector('#place-order-button');
+  const message = document.querySelector('#order-message');
+  const groupedItems = Array.from(state.cart.reduce((map, product) => {
+    const item = map.get(product.id) || { product_id: product.id, quantity: 0 };
+    item.quantity += 1;
+    map.set(product.id, item);
+    return map;
+  }, new Map()).values());
+  button.disabled = true;
+  message.textContent = 'Placing your order…';
+  const { data: orderId, error } = await supabase.rpc('place_order', {
+    p_customer_name: document.querySelector('#customer-name').value,
+    p_phone: document.querySelector('#customer-phone').value,
+    p_delivery_address: document.querySelector('#delivery-address').value,
+    p_items: groupedItems
+  });
+  button.disabled = false;
+  if (error) {
+    message.textContent = error.message;
+    return;
+  }
+  state.cart = [];
+  updateCart();
+  event.target.reset();
+  message.textContent = `Order ${String(orderId).slice(0, 8).toUpperCase()} received.`;
+  showToast('Your order has been placed successfully.');
+  setTimeout(() => checkoutModal.close(), 1200);
+});
+
+async function initializeStore() {
+  renderProducts();
+  updateCart();
+  updateAuthUI();
+  if (!supabase) return;
+
+  const [{ data: authData }, { data: productData, error: productError }] = await Promise.all([
+    supabase.auth.getSession(),
+    supabase.from('products').select('id,name,category,price,image,tag,position').eq('is_active', true).order('id')
+  ]);
+  state.session = authData.session;
+  if (!productError && productData?.length) products = productData;
+  updateAuthUI();
+  renderProducts();
+
+  supabase.auth.onAuthStateChange((_event, session) => {
+    state.session = session;
+    updateAuthUI();
+  });
+}
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    closeCart();
+    closeSearch();
+  }
+});
+
+initializeStore();
