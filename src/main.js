@@ -35,7 +35,11 @@ const fallbackProducts = [
   { id: 31, name: 'Scarlet Stiletto Mule', category: 'shoes', price: 22000, image: '/images/products/scarlet-stiletto-mule.jpg', tag: 'New', position: 'center', sizes: '' },
   { id: 32, name: 'Trio Patent Slingback', category: 'shoes', price: 25000, image: '/images/products/trio-patent-slingback.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41 · Wine: 37, 41' },
   { id: 33, name: 'Onyx Rose Stiletto', category: 'shoes', price: 22000, image: '/images/products/onyx-rose-stiletto.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41' },
-  { id: 34, name: 'Color Pop Slingback', category: 'shoes', price: 25000, image: '/images/products/color-pop-slingback.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41 · Wine: 37, 41 · Green: 42' }
+  { id: 34, name: 'Color Pop Slingback', category: 'shoes', price: 25000, image: '/images/products/color-pop-slingback.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41 · Wine: 37, 41 · Green: 42' },
+  { id: 35, name: 'Noir H Slide', category: 'shoes', price: 22000, image: '/images/products/noir-h-slide.jpg', tag: 'New', position: 'center', sizes: 'Black: 37, 38, 41' },
+  { id: 36, name: 'Ivory H Slide', category: 'shoes', price: 25000, image: '/images/products/ivory-h-slide.jpg', tag: 'New', position: 'center', sizes: '' },
+  { id: 37, name: 'Wine H Slide', category: 'shoes', price: 22000, image: '/images/products/wine-h-slide.jpg', tag: 'New', position: 'center', sizes: 'Wine: 37, 41' },
+  { id: 38, name: 'Caramel H Slide', category: 'shoes', price: 25000, image: '/images/products/caramel-h-slide.jpg', tag: 'New', position: 'center', sizes: '' }
 ];
 
 let products = fallbackProducts;

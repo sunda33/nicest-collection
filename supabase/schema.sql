@@ -92,6 +92,17 @@ on conflict (id) do update set
   image = excluded.image, tag = excluded.tag, position = excluded.position,
   sizes = excluded.sizes, is_active = true;
 
+insert into public.products (id, name, category, price, image, tag, position, sizes)
+values
+  (35, 'Noir H Slide', 'shoes', 22000, '/images/products/noir-h-slide.jpg', 'New', 'center', 'Black: 37, 38, 41'),
+  (36, 'Ivory H Slide', 'shoes', 25000, '/images/products/ivory-h-slide.jpg', 'New', 'center', ''),
+  (37, 'Wine H Slide', 'shoes', 22000, '/images/products/wine-h-slide.jpg', 'New', 'center', 'Wine: 37, 41'),
+  (38, 'Caramel H Slide', 'shoes', 25000, '/images/products/caramel-h-slide.jpg', 'New', 'center', '')
+on conflict (id) do update set
+  name = excluded.name, category = excluded.category, price = excluded.price,
+  image = excluded.image, tag = excluded.tag, position = excluded.position,
+  sizes = excluded.sizes, is_active = true;
+
 insert into public.products (id, name, category, price, image, tag, position)
 values
   (10, 'Cognac Studded Mini Tote', 'bags', 25000, '/images/products/cognac-studded-mini-tote.jpg', 'New', 'center'),
