@@ -76,7 +76,7 @@ h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 .runway-heading > a { flex: 0 0 auto; padding-bottom: 7px; border-bottom: 1px solid rgba(248,234,225,.5); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
 .runway-heading > a span { margin-left: 24px; }
 .runway-window { width: 100%; overflow: hidden; }
-.runway-track { width: max-content; display: flex; animation: runway-scroll 32s linear infinite; will-change: transform; }
+.runway-track { width: max-content; display: flex; animation: runway-scroll 18s linear infinite; will-change: transform; }
 .runway-set { display: flex; align-items: center; gap: 18px; padding-right: 18px; }
 .runway-card { position: relative; width: clamp(250px, 25vw, 390px); height: clamp(390px, 42vw, 620px); flex: 0 0 auto; overflow: hidden; color: white; background: #4f2931; }
 .runway-card-short { height: clamp(310px, 32vw, 475px); }
@@ -95,13 +95,14 @@ h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 
 .categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-bottom: clamp(100px, 12vw, 180px); }
 .category-card { position: relative; min-height: 560px; overflow: hidden; color: white; background: #c8b7a8; }
+.category-card:focus-visible { outline: 3px solid var(--wine); outline-offset: 4px; }
 .category-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(35,17,18,.64), transparent 55%); }
 .category-card img { height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
 .category-card:hover img { transform: scale(1.035); }
 .category-card > div { position: absolute; z-index: 2; inset: auto 24px 26px; }
 .category-card span { font-size: 9px; letter-spacing: .16em; }
 .category-card h3 { margin: 8px 0 20px; font-family: 'Italiana', Georgia, serif; font-size: clamp(34px, 3.4vw, 52px); font-weight: 400; }
-.category-card a { padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,.6); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.category-card .category-cta { display: inline-block; padding-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,.6); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
 .category-shoes img { object-position: center; }
 .category-bags img { object-position: center; }
 .category-dresses img { object-position: center top; }
@@ -129,15 +130,6 @@ h2 { font-size: clamp(48px, 6.2vw, 94px); line-height: .95; }
 .product-sizes { display: block; max-width: 245px; margin-top: 8px; color: var(--muted); font-size: 9px; line-height: 1.5; }
 .product-info strong { color: var(--wine); font-size: 12px; font-weight: 500; white-space: nowrap; }
 .no-results { padding: 40px 0 80px; text-align: center; color: var(--muted); }
-
-.product-card:nth-child(3n + 1) .product-image img { animation: product-drift 4.5s ease-in-out infinite alternate; }
-.product-card:nth-child(3n + 2) .product-image img { animation: product-drift 5.25s ease-in-out -1.5s infinite alternate-reverse; }
-.product-card:nth-child(3n) .product-image img { animation: product-drift 6s ease-in-out -3s infinite alternate; }
-
-@keyframes product-drift {
-  from { transform: scale(1.01) translate3d(0, 1.5%, 0); }
-  to { transform: scale(1.11) translate3d(0, -3%, 0); }
-}
 
 .story { display: grid; grid-template-columns: 1fr 1fr; min-height: 780px; color: #f8eae1; background: var(--wine-dark); }
 .story-image { min-height: 650px; overflow: hidden; }
@@ -266,7 +258,6 @@ footer { padding: 75px clamp(24px, 6vw, 96px) 28px; color: #e9dcd4; background: 
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
-  .product-image img { animation: none !important; }
   .runway-track { width: auto; overflow-x: auto; animation: none; }
   .runway-set[aria-hidden="true"] { display: none; }
 }
