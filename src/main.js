@@ -74,14 +74,34 @@ function renderProducts() {
   noResults.textContent = 'No pieces matched your search. Try another word.';
 }
 
+const navLinks = [...document.querySelectorAll('.desktop-nav a, .mobile-nav a')];
+function setNavActive(key) {
+  navLinks.forEach(link => {
+    const linkKey = link.dataset.filterLink || link.dataset.navSection;
+    const active = linkKey === key;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+
 function setFilter(filter) {
   state.filter = filter;
   document.querySelectorAll('.filter').forEach(button => button.classList.toggle('active', button.dataset.filter === filter));
+  if (filter !== 'all') setNavActive(filter);
   renderProducts();
 }
 
 document.querySelectorAll('[data-filter-link]').forEach(link => link.addEventListener('click', () => setFilter(link.dataset.filterLink)));
 document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => setFilter(button.dataset.filter)));
+document.querySelectorAll('[data-nav-section]').forEach(link => link.addEventListener('click', () => setNavActive(link.dataset.navSection)));
+
+const sectionObserver = new IntersectionObserver(entries => {
+  const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (visible) setNavActive(visible.target.id);
+}, { rootMargin: '-25% 0px -55%', threshold: [0, .25, .5] });
+sectionObserver.observe(document.querySelector('#new'));
+sectionObserver.observe(document.querySelector('#story'));
 
 grid.addEventListener('click', event => {
   const add = event.target.closest('[data-add]');
