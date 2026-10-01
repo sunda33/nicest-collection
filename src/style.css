@@ -16,6 +16,9 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* Keep a typing caret in form fields, not in storefront copy when clicked. */
+:root { caret-color: transparent; }
+input, textarea, [contenteditable=""], [contenteditable="true"], [contenteditable="plaintext-only"] { caret-color: auto; }
 body { margin: 0; min-width: 320px; background: var(--paper); }
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
